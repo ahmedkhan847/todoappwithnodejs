@@ -13,15 +13,9 @@ router.get('/', helpers.httpauth.authenticate('basic', { session: false }), func
     res.json(result);
   }).catch(err => {
     var result = helpers.prepareResult();
-    var errors = [];
     result.status = false;
     result.message = "Error in getting all tasks";
-    err.errors.forEach(function (element) {
-      var obj = {};
-      obj[element.path] = element.message;
-      errors.push(obj);
-    }, this);
-    result.errors = errors;
+    result.errors = helpers.fetchErrors(err);
     models.Logs.log(req.params, result, req.user.id, result.message);
     res.json(result);
   });
@@ -41,15 +35,9 @@ router.get('/:task_id/', helpers.httpauth.authenticate('basic', { session: false
     res.json(result);
   }).catch(err => {
     var result = helpers.prepareResult();
-    var errors = [];
     result.status = false;
     result.message = "Error in getting single task";
-    err.errors.forEach(function (element) {
-      var obj = {};
-      obj[element.path] = element.message;
-      errors.push(obj);
-    }, this);
-    result.errors = errors;
+    result.errors = helpers.fetchErrors(err);
     models.Logs.log(req.params, result, req.user.id, result.message);
     res.json(result);
   });
@@ -78,15 +66,9 @@ router.put('/:task_id/', helpers.httpauth.authenticate('basic', { session: false
         res.json(result);
       }).catch(err => {
         var result = helpers.prepareResult();
-        var errors = [];
         result.status = false;
         result.message = "Error in updating task";
-        err.errors.forEach(function (element) {
-          var obj = {};
-          obj[element.path] = element.message;
-          errors.push(obj);
-        }, this);
-        result.errors = errors;
+        result.errors = helpers.fetchErrors(err);
         models.Logs.log(req.params, result, req.user.id, result.message);
         res.json(result);
       });
@@ -101,17 +83,9 @@ router.put('/:task_id/', helpers.httpauth.authenticate('basic', { session: false
 
   }).catch(err => {
     var result = helpers.prepareResult();
-    var errors = [];
     result.status = false;
     result.message = "Error in updating task";
-
-    err.errors.forEach(function (element) {
-      var obj = {};
-      obj[element.path] = element.message;
-      errors.push(obj);
-    }, this);
-
-    result.errors = errors;
+    result.errors = helpers.fetchErrors(err);
     models.Logs.log(req.params, result, req.user.id, result.message);
     res.json(result);
   });

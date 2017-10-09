@@ -44,15 +44,9 @@ router.post('/create', function (req, res) {
     res.json(result);
   }).catch(err => {
     var result = helpers.prepareResult();
-    var errors = [];
     result.status = false;
     result.message = "Error in creating user";
-    err.errors.forEach(function (element) {
-      var obj = {};
-      obj[element.path] = element.message;
-      errors.push(obj);
-    }, this);
-    result.errors = errors;
+    result.errors = helpers.fetchErrors(err);
     models.Logs.log(req.body, result, 0, "error while creating new user");
     res.json(result);
   });
@@ -72,15 +66,9 @@ router.delete('/:user_id/', helpers.httpauth.authenticate('basic', { session: fa
       res.json(result);
     }).catch(err => {
       var result = helpers.prepareResult();
-      var errors = [];
       result.status = false;
       result.message = "Error in deleting user";
-      err.errors.forEach(function (element) {
-        var obj = {};
-        obj[element.path] = element.message;
-        errors.push(obj);
-      }, this);
-      result.errors = errors;
+      result.errors = helpers.fetchErrors(err);
       models.Logs.log(req.params, result, req.user.id, result.message);
       res.json(result);
     });
@@ -115,15 +103,9 @@ router.get('/:user_id/', helpers.httpauth.authenticate('basic', { session: false
       res.json(result);
     }).catch(err => {
       var result = helpers.prepareResult();
-      var errors = [];
       result.status = false;
       result.message = "Error in getting user";
-      err.errors.forEach(function (element) {
-        var obj = {};
-        obj[element.path] = element.message;
-        errors.push(obj);
-      }, this);
-      result.errors = errors;
+      result.errors = helpers.fetchErrors(err);
       models.Logs.log(req.params, result, req.user.id, result.message);
       res.json(result);
     });
@@ -155,15 +137,9 @@ router.get('/:user_id/task', helpers.httpauth.authenticate('basic', { session: f
       res.json(result);
     }).catch(err => {
       var result = helpers.prepareResult();
-      var errors = [];
       result.status = false;
       result.message = "Error in getting user";
-      err.errors.forEach(function (element) {
-        var obj = {};
-        obj[element.path] = element.message;
-        errors.push(obj);
-      }, this);
-      result.errors = errors;
+      result.errors = helpers.fetchErrors(err);
       models.Logs.log(req.params, result, req.user.id, result.message);
       res.json(result);
     });
@@ -194,15 +170,9 @@ router.post('/:user_id/tasks/create', helpers.httpauth.authenticate('basic', { s
       res.json(result);
     }).catch(err => {
       var result = helpers.prepareResult();
-      var errors = [];
       result.status = false;
       result.message = "Error in creating user task";
-      err.errors.forEach(function (element) {
-        var obj = {};
-        obj[element.path] = element.message;
-        errors.push(obj);
-      }, this);
-      result.errors = errors;
+      result.errors = helpers.fetchErrors(err);
       models.Logs.log(req.body, result, req.user.id, result.message);
       res.json(result);
     });
@@ -238,15 +208,9 @@ router.delete('/:user_id/tasks/:task_id/', helpers.httpauth.authenticate('basic'
       res.json(result);
     }).catch(err => {
       var result = helpers.prepareResult();
-      var errors = [];
       result.status = false;
       result.message = "Error in deleting user task";
-      err.errors.forEach(function (element) {
-        var obj = {};
-        obj[element.path] = element.message;
-        errors.push(obj);
-      }, this);
-      result.errors = errors;
+      result.errors = helpers.fetchErrors(err);
       models.Logs.log(req.params, result, req.user.id, result.message);
       res.json(result);
     });

@@ -34,5 +34,14 @@ module.exports = function (options) {
         return result;
     };
 
+    helpers.fetchErrors = function (errs) {
+        var errors = [];
+        errs.errors.forEach(function (element) {
+            var obj = {};
+            obj[element.path] = element.message;
+            errors.push(obj);
+          }, this);
+        return errors;  
+    }
     return helpers;
 }
